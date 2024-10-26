@@ -1,0 +1,32 @@
+.card {
+    --_border-size: 0.5em;
+    --_border-radius: 0.4em;
+    --_scale-card: 1.1;
+    --_color: lightgray;
+    --_card_colors: var(--primary-color), var(--secondary-color), var(--primary-color), var(--secondary-color), var(--primary-color);
+
+    border-radius: var(--_border-radius);
+    background-color: var(--_color);
+    /* padding: calc(var(--spacer)); */
+    margin: calc(var(--_border-size) / 2);
+    /* prettier-ignore */
+    transition: 
+        color 300ms ease-in-out,
+        background-color 300ms ease-in-out,
+        scale ease-in-out 300ms,
+        filter ease-in-out 300ms,
+        opacity ease-in-out 300ms;
+    border: solid 10px red;
+    outline: none;
+    &:focus-visible,
+    &:hover {
+        animation: rotate 1500ms linear infinite;
+    }
+    &:focus:not(:focus-visible) {
+        background-color: red;
+    }
+    &:focus {
+        background-color: green;
+    }
+    border-image: conic-gradient(from var(--_angle), var(--_card_colors)) 1;
+}

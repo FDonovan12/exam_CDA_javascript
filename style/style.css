@@ -1,0 +1,53 @@
+@import url('variable.css');
+@import url('reset.css');
+@import url('layout.css');
+@import url('component.css');
+
+.products-grid {
+    --base-min-col-size: 20ch;
+    &:has([selected])&:not([selected]) {
+        animation: zIndexHack 300ms;
+    }
+    & > * {
+        display: grid;
+        grid-template-rows: 150px 1fr auto;
+        grid-template-columns: 1fr 9ch;
+        & > img {
+            grid-column: span 2;
+            max-height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        & > .card-title {
+            grid-column: span 2;
+        }
+        & > .card-price {
+            grid-column: -2;
+        }
+        &:not([selected]) {
+            animation: zIndexHack 300ms;
+        }
+        & .details {
+            /* display: none; */
+
+            position: absolute;
+            z-index: -10;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+            opacity: 0;
+            background-color: white;
+            scale: 0.5;
+            transition: color 300ms ease-in-out, display 300ms ease-in-out, background-color 300ms ease-in-out, scale ease-in-out 300ms,
+                filter ease-in-out 300ms, opacity ease-in-out 300ms;
+        }
+        &[selected] {
+            .details {
+                /* display: block; */
+                z-index: 10;
+                opacity: 1;
+                scale: 1;
+            }
+        }
+    }
+}

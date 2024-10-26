@@ -1,0 +1,74 @@
+.auto-grid {
+    display: grid;
+    --base-min-col-size: 12ch;
+    --base-max-col-size: 24ch;
+    --min-col-size: var(--base-min-col-size);
+    --max-col-size: var(--base-max-col-size);
+    --gap-column: calc(0.2em);
+    grid-template-columns: repeat(auto-fit, minmax(var(--min-col-size), 1fr));
+    grid-auto-rows: 1fr;
+}
+& :where(.grid-container) {
+    --gap: clamp(1rem, 6vw, 3rem);
+    --max-content-size: 75ch;
+    --feature: minmax(0rem, 5rem);
+    --breakout: minmax(0rem, 4rem);
+    --partial-content-part: 1;
+    --partial-margin-part: 2;
+
+    --partial-total-part: calc(var(--partial-content-part) + var(--partial-margin-part));
+    --content: min(var(--max-content-size), 100% - calc((calc(var(--gap))) * 2));
+    --full: minmax(var(--gap), 3fr);
+    --partial-content: minmax(calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-content-part)), 1fr);
+    --partial-margin: minmax(calc(var(--content) / calc(2 * var(--partial-total-part)) * var(--partial-margin-part)), 2fr);
+
+    display: grid;
+    grid-template-columns:
+        [full-width-start] var(--full)
+        [breakout-start] var(--breakout)
+        [content-start] var(--partial-margin)
+        [partial-start] var(--partial-content)
+        [middle]
+        var(--partial-content) [partial-end]
+        var(--partial-margin) [content-end]
+        var(--breakout) [breakout-end]
+        var(--full) [full-width-end];
+    row-gap: var(--row-gap-container-grid, 1em);
+    & > * {
+        grid-column: content;
+    }
+    & > :where(.middle-start) {
+        grid-column-start: middle;
+        padding-left: 0.5em;
+    }
+    & > :where(.middle-end) {
+        grid-column-end: middle;
+        padding-right: 0.5em;
+    }
+    & > :where(.partial-start) {
+        grid-column-start: partial;
+        padding-left: 0.5em;
+    }
+    & > :where(.partial-end) {
+        grid-column-end: partial;
+        padding-right: 0.5em;
+    }
+    & > :where(.breakout) {
+        grid-column: breakout;
+    }
+    & > :where(.breakout-start) {
+        grid-column-start: breakout;
+    }
+    & > :where(.breakout-end) {
+        grid-column-end: breakout;
+    }
+    & > :where(.full-width) {
+        grid-column: full-width;
+    }
+    & > :where(.full-width-start) {
+        grid-column-start: full-width;
+    }
+    & > :where(.full-width-end) {
+        grid-column-end: full-width;
+    }
+}
