@@ -2,14 +2,40 @@
 @import url('reset.css');
 @import url('layout.css');
 @import url('component.css');
+
 body {
-    &:has([selected]) {
-        /* overflow: hidden;
-        height: 100svh; */
+    &::before {
+        content: '';
+        /* inset: 0;
+        bottom: 0; */
+        height: 100%;
+        width: 100%;
+        /* position: absolute; */
+        position: fixed;
+        background-color: hsl(from var(--primary-color-900) h s l / 0.9);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity 300ms ease-in-out, z-index 0ms 300ms linear;
     }
+    &:has([selected], [opened]) {
+        &::before {
+            transition: opacity 300ms ease-in-out;
+            opacity: 1;
+            z-index: 3;
+        }
+    }
+}
+h1 {
+    color: var(--primary-color-900);
 }
 * {
     /* background-color: hsl(0 0 0 / 0.3); */
+}
+main {
+    overflow: hidden;
+}
+footer {
+    background-color: lightgray;
 }
 .products-grid {
     --base-min-col-size: 20ch;
@@ -17,21 +43,23 @@ body {
     &:has([selected]) > :not([selected]) {
         pointer-events: none;
     }
-    & > * {
+    & > .card {
         display: grid;
         grid-template-rows: auto 1fr auto;
-        grid-template-columns: 1fr 9ch;
+        grid-template-columns: 1fr 8ch;
+        overflow: hidden;
+        background-color: var(--primary-color-100);
         & > img {
             grid-column: span 2;
-            /* max-height: 100%; */
             width: 100%;
-            aspect-ratio: 1.5;
+            aspect-ratio: 1.6;
             object-fit: cover;
         }
         & > .card-title {
             grid-column: span 2;
         }
         & > .card-price {
+            font-size: var(--fs-300);
             grid-column: -2;
         }
         & .details {
@@ -40,13 +68,12 @@ body {
             z-index: 10;
             opacity: 0;
             scale: 0;
-            transition: color 300ms ease-in-out, display 300ms ease-in-out, background-color 300ms ease-in-out,
-                scale ease-in-out 300ms, filter ease-in-out 300ms, opacity ease-in-out 300ms;
+            transition: scale 0ms 300ms, opacity linear 300ms;
+            overflow-y: scroll;
             &::before {
                 content: '';
-                background-color: hsl(from var(--primary-color) h s 10 / 0.9);
-                position: absolute;
-                inset: -200vmax;
+                /* position: absolute;
+                inset: 0; */
             }
             & > div {
                 position: absolute;
@@ -54,10 +81,8 @@ body {
                 left: 50%;
                 translate: -50%;
                 display: grid;
-                grid-template-rows: 150px 1fr auto;
+                grid-template-rows: auto 1fr auto;
                 --gap: clamp(0.3rem, 2vw, 3rem);
-                --partial-content-part: 5;
-                --partial-margin-part: 1;
                 row-gap: 0.4em;
                 width: min(600px, calc(100% - 1em));
                 margin-inline: auto;
@@ -69,17 +94,14 @@ body {
                     padding-inline: 0.2em;
                 }
                 & > img {
-                    max-height: 100%;
+                    /* max-height: 20svh; */
                     width: 100%;
+                    aspect-ratio: 21/9;
                     object-fit: cover;
                 }
                 & > .detail-attribut {
                     row-gap: 0;
                     & > li {
-                        /* max-width: clamp(240px, 50%, 400px); */
-                        /* margin-inline: auto; */
-                        /* display: flex;
-                        justify-content: space-evenly; */
                         & > :first-child {
                             grid-column: content / middle;
                         }
@@ -97,24 +119,103 @@ body {
             }
         }
         &[selected] {
+            /* z-index: 10;  */
             .details {
                 opacity: 1;
                 scale: 1;
+                transition: scale linear 0ms, opacity ease-in-out 300ms;
             }
         }
     }
 }
-div:has(#search) {
+div:has(> #search) {
     position: relative;
     &::after {
         content: '';
-        background-image: url('./../assets/svg/search.svg');
+        background-color: var(--primary-color-800);
+        /* background-image: url('./../assets/svg/search.svg'); */
+        -webkit-mask-image: url('./../assets/svg/search.svg');
+        mask-image: url('./../assets/svg/search.svg');
+        fill: var(--primary-color);
         height: 60%;
         aspect-ratio: 1;
         position: absolute;
         pointer-events: none;
-        z-index: 100;
         top: 50%;
         translate: -120% -50%;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .shopping {
+        display: grid;
+        width: 300px;
+        /* grid-template-rows: auto 0fr; */
+        position: relative;
+        overflow: hidden;
+        --_timing: 300ms;
+        /* transition: grid-template-rows 300ms linear, transform 300ms linear, translate 300ms linear; */
+        &[opened] {
+            overflow: visible;
+            z-index: 10;
+            /* grid-template-rows: auto 1fr; */
+            /* &::before {
+                transition: opacity var(--_timing) linear;
+                opacity: 1;
+            } */
+            #shopping-cart {
+                translate: 0;
+            }
+        }
+        /* &::before {
+            content: '';
+            inset: 0;
+            position: absolute;
+            background-color: hsl(from var(--primary-color-900) h s l / 0.9);
+            opacity: 0;
+        } */
+        #shopping-cart {
+            margin-top: 0.5em;
+            top: 100%;
+            right: 0;
+            transition: grid-template-rows var(--_timing) linear, transform var(--_timing) linear,
+                translate var(--_timing) linear;
+            overflow: hidden;
+            position: absolute;
+            translate: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, auto);
+            & > div {
+                display: grid;
+                grid-column: span 4;
+                gap: 0.5em;
+                grid-template-columns: subgrid;
+                place-content: center;
+                & > .name {
+                    text-align: end;
+                }
+                &:nth-child(odd) {
+                    background-color: hsl(from var(--primary-color) h s 80);
+                }
+                &:nth-child(even) {
+                    background-color: hsl(from var(--primary-color) h s 90);
+                }
+                & > button {
+                    place-content: center;
+                    height: fit-content;
+                    font-size: var(--fs-300);
+                }
+            }
+        }
+        & > .btn-primary-outline {
+            height: 100%;
+            font-size: var(--fs-600);
+            * {
+                height: 100%;
+            }
+        }
     }
 }

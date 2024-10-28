@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "nom_produit": "CamPro X100",
         "descriptif": "Appareil photo compact avec capteur haute résolution pour amateurs de photographie.",
         "caracteristiques": {
@@ -12,6 +13,7 @@
         "image": "assets/images/camera1.jpg"
     },
     {
+        "id": 2,
         "nom_produit": "Nikon Explorer Z5",
         "descriptif": "Reflex numérique avancé avec une excellente qualité d'image et des performances rapides.",
         "caracteristiques": {
@@ -24,6 +26,7 @@
         "image": "assets/images/camera2.jpg"
     },
     {
+        "id": 3,
         "nom_produit": "Canon ProShot 9000",
         "descriptif": "Appareil photo DSLR idéal pour les professionnels cherchant des performances de haute qualité.",
         "caracteristiques": {
@@ -36,6 +39,7 @@
         "image": "assets/images/camera3.jpg"
     },
     {
+        "id": 4,
         "nom_produit": "Sony Alpha 7",
         "descriptif": "Appareil hybride léger avec capteur plein format et performances exceptionnelles en faible lumière.",
         "caracteristiques": {
@@ -48,6 +52,7 @@
         "image": "assets/images/camera4.jpg"
     },
     {
+        "id": 5,
         "nom_produit": "Olympus Vision X300",
         "descriptif": "Appareil tout-terrain avec résistance à l'eau et à la poussière, idéal pour les aventures en plein air.",
         "caracteristiques": {
@@ -60,6 +65,7 @@
         "image": "assets/images/camera5.jpg"
     },
     {
+        "id": 6,
         "nom_produit": "Fujifilm Retro X",
         "descriptif": "Appareil au look vintage avec les technologies modernes de traitement d'image.",
         "caracteristiques": {
@@ -72,6 +78,7 @@
         "image": "assets/images/camera6.jpg"
     },
     {
+        "id": 7,
         "nom_produit": "Leica Capture Pro",
         "descriptif": "Appareil photo haut de gamme avec une qualité d'image exceptionnelle pour les passionnés.",
         "caracteristiques": {
@@ -84,6 +91,7 @@
         "image": "assets/images/camera7.jpg"
     },
     {
+        "id": 8,
         "nom_produit": "Pentax Explorer II",
         "descriptif": "Appareil photo reflex robuste avec protection contre les intempéries, idéal pour les aventuriers.",
         "caracteristiques": {
@@ -96,6 +104,7 @@
         "image": "assets/images/camera8.jpg"
     },
     {
+        "id": 9,
         "nom_produit": "GoPro Adventure Hero",
         "descriptif": "Caméra d'action compacte et résistante pour capturer toutes vos aventures extrêmes.",
         "caracteristiques": {
@@ -108,6 +117,7 @@
         "image": "assets/images/camera9.jpg"
     },
     {
+        "id": 10,
         "nom_produit": "Polaroid Instant Snap",
         "descriptif": "Appareil photo instantané pour imprimer vos souvenirs en un clic.",
         "caracteristiques": {
@@ -120,6 +130,7 @@
         "image": "assets/images/camera10.jpg"
     },
     {
+        "id": 11,
         "nom_produit": "Panasonic Lumix GX8",
         "descriptif": "Hybride performant pour les photographes amateurs à la recherche de flexibilité.",
         "caracteristiques": {
@@ -132,6 +143,7 @@
         "image": "assets/images/camera11.jpg"
     },
     {
+        "id": 12,
         "nom_produit": "Samsung SmartShot X1",
         "descriptif": "Appareil photo intelligent avec connectivité étendue et synchronisation cloud.",
         "caracteristiques": {
@@ -144,6 +156,7 @@
         "image": "assets/images/camera12.jpg"
     },
     {
+        "id": 13,
         "nom_produit": "Ricoh GR II",
         "descriptif": "Compact haut de gamme avec capteur APS-C pour des photos de qualité professionnelle.",
         "caracteristiques": {
@@ -156,6 +169,7 @@
         "image": "assets/images/camera13.jpg"
     },
     {
+        "id": 14,
         "nom_produit": "Kodak EasyShare Max",
         "descriptif": "Appareil photo simple d'utilisation pour des photos de qualité au quotidien.",
         "caracteristiques": {
@@ -168,6 +182,7 @@
         "image": "assets/images/camera14.jpg"
     },
     {
+        "id": 15,
         "nom_produit": "Lumix Pro DMC-GH5",
         "descriptif": "Hybride de haute qualité pour les professionnels de la vidéo et de la photographie.",
         "caracteristiques": {
@@ -180,6 +195,7 @@
         "image": "assets/images/camera15.jpg"
     },
     {
+        "id": 16,
         "nom_produit": "Lumix Pro DMC-GH5",
         "descriptif": "Hybride de haute qualité pour les professionnels de la vidéo et de la photographie.",
         "caracteristiques": {
@@ -192,6 +208,7 @@
         "image": "assets/images/camera16.jpg"
     },
     {
+        "id": 17,
         "nom_produit": "Lumix Pro DMC-GH15",
         "descriptif": "Hybride de haute qualité pour les professionnels de la vidéo et de la photographie.",
         "caracteristiques": {
@@ -204,6 +221,7 @@
         "image": "assets/images/camera17.jpg"
     },
     {
+        "id": 18,
         "nom_produit": "Lumix Pro DMC-GH5",
         "descriptif": "Hybride de haute qualité pour les professionnels de la vidéo et de la photographie.",
         "caracteristiques": {
@@ -216,6 +234,7 @@
         "image": "assets/images/camera18.jpg"
     },
     {
+        "id": 19,
         "nom_produit": "Lumix Pro DMC-GH51",
         "descriptif": "Hybride de haute qualité pour les professionnels de la vidéo et de la photographie.",
         "caracteristiques": {

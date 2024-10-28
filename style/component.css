@@ -3,7 +3,8 @@
     --_border-radius: 0.4em;
     --_scale-card: 1.1;
     --_color: lightgray;
-    --_card_colors: var(--primary-color), var(--secondary-color), var(--primary-color), var(--secondary-color), var(--primary-color);
+    --_card_colors: var(--primary-color), var(--secondary-color), var(--primary-color), var(--secondary-color),
+        var(--primary-color);
 
     border-radius: var(--_border-radius);
     background-color: var(--_color);
@@ -15,19 +16,16 @@
         scale ease-in-out 300ms,
         filter ease-in-out 300ms,
         opacity ease-in-out 300ms;
-    border: solid 5px;
+    border: solid 5px var(--primary-color-200);
     outline: none;
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    /* border-image: conic-gradient(from var(--_angle), var(--_card_colors)) 1; */
     &:focus-visible,
     &:hover {
-        animation: rotate 1500ms linear infinite;
+        /* animation: rotate 1500ms linear infinite; */
+        border-color: var(--primary-color);
     }
-    &:focus:not(:focus-visible) {
-        background-color: red;
-    }
-    &:focus {
-        background-color: green;
-    }
-    border-image: conic-gradient(from var(--_angle), var(--_card_colors)) 1;
 }
 & :where([class*='btn-group'] > *, [class*='btn']:not(*[class*='btn-group'])) {
     --_border-size: 0.1em;
@@ -110,7 +108,11 @@
     /* &:where(.btn, .btn-group > *) {
         --_color-box: currentColor;
     } */
-    &:where([class*='btn-group'].scale > *, [class*='btn-group'] > *.scale, [class*='btn']:not(*[class*='btn-group']).scale) {
+    &:where(
+            [class*='btn-group'].scale > *,
+            [class*='btn-group'] > *.scale,
+            [class*='btn']:not(*[class*='btn-group']).scale
+        ) {
         &:where(:not(:hover)) {
             animation: zIndexHack 100ms;
         }
@@ -119,7 +121,11 @@
             z-index: 10;
         }
     }
-    &:where([class*='btn-group'].inline > *, [class*='btn-group'] > *.inline, [class*='btn']:not(*[class*='btn-group']).inline) {
+    &:where(
+            [class*='btn-group'].inline > *,
+            [class*='btn-group'] > *.inline,
+            [class*='btn']:not(*[class*='btn-group']).inline
+        ) {
         &::after {
             content: '';
             width: calc(100% - 4 * var(--spacer));

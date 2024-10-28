@@ -23,6 +23,20 @@
     --dark-color-text: rgb(245, 245, 245);
 
     --primary-color: hsl(200, 84%, 48%);
+    --primary-color-400: var(--primary-color);
+    --primary-color-50: hsl(from var(--primary-color) h s 95);
+    --primary-color-100: hsl(from var(--primary-color) h s 90);
+    --primary-color-200: hsl(from var(--primary-color) h s 80);
+    --primary-color-400: hsl(from var(--primary-color) h s 50);
+    --primary-color-800: hsl(from var(--primary-color) h s 20);
+    --primary-color-900: hsl(from var(--primary-color) h s 10);
+
+    --test-color: hsl(204, 80%, 16%);
+    --test-color: hsl(202, 80%, 24%);
+    --test-color: hsl(199, 89%, 48%);
+    --test-color: hsl(204, 94%, 94%);
+    --test-color: hsl(204, 100%, 97%);
+
     --primary-color-text: hsl(0, 0%, 0%);
 
     --secondary-color: hsl(85, 100%, 55%);
