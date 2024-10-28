@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="script.js"></script>
+        <script src="script.js" defer></script>
         <link rel="stylesheet" href="style/style.css" />
         <title>Appareils Photo</title>
     </head>
@@ -11,6 +11,15 @@
         <header></header>
         <main>
             <h1>Nos Appareils Photo</h1>
+            <form id="search-form">
+                <div>
+                    <input type="text" id="search" placeholder="Recherche" />
+                </div>
+                <input type="number" id="price-min" min="0" max="2000" value="0" />
+                <input type="range" id="price-range" min="0" max="2000" value="0" />
+                <input type="number" id="price-max" min="0" max="2000" value="2000" />
+            </form>
+            <div id="shopping-cart"></div>
             <div class="auto-grid products-grid"></div>
         </main>
         <footer></footer>

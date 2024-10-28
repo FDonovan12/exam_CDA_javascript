@@ -9,7 +9,7 @@
             "écran": "3 pouces"
         },
         "prix": "299.99 €",
-        "image": "images/camera1.jpg"
+        "image": "assets/images/camera1.jpg"
     },
     {
         "nom_produit": "Nikon Explorer Z5",
@@ -21,7 +21,7 @@
             "écran": "3.5 pouces tactile"
         },
         "prix": "999.99 €",
-        "image": "images/camera2.jpg"
+        "image": "assets/images/camera2.jpg"
     },
     {
         "nom_produit": "Canon ProShot 9000",
@@ -33,7 +33,7 @@
             "écran": "3 pouces rotatif"
         },
         "prix": "1599.99 €",
-        "image": "images/camera3.jpg"
+        "image": "assets/images/camera3.jpg"
     },
     {
         "nom_produit": "Sony Alpha 7",
@@ -45,7 +45,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "2199.99 €",
-        "image": "images/camera4.jpg"
+        "image": "assets/images/camera4.jpg"
     },
     {
         "nom_produit": "Olympus Vision X300",
@@ -57,7 +57,7 @@
             "écran": "3 pouces"
         },
         "prix": "499.99 €",
-        "image": "images/camera5.jpg"
+        "image": "assets/images/camera5.jpg"
     },
     {
         "nom_produit": "Fujifilm Retro X",
@@ -69,7 +69,7 @@
             "écran": "3 pouces fixe"
         },
         "prix": "399.99 €",
-        "image": "images/camera6.jpg"
+        "image": "assets/images/camera6.jpg"
     },
     {
         "nom_produit": "Leica Capture Pro",
@@ -81,7 +81,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "2999.99 €",
-        "image": "images/camera7.jpg"
+        "image": "assets/images/camera7.jpg"
     },
     {
         "nom_produit": "Pentax Explorer II",
@@ -93,7 +93,7 @@
             "écran": "3 pouces"
         },
         "prix": "1299.99 €",
-        "image": "images/camera8.jpg"
+        "image": "assets/images/camera8.jpg"
     },
     {
         "nom_produit": "GoPro Adventure Hero",
@@ -105,7 +105,7 @@
             "écran": "2 pouces tactile"
         },
         "prix": "399.99 €",
-        "image": "images/camera9.jpg"
+        "image": "assets/images/camera9.jpg"
     },
     {
         "nom_produit": "Polaroid Instant Snap",
@@ -117,7 +117,7 @@
             "écran": "Pas d'écran"
         },
         "prix": "99.99 €",
-        "image": "images/camera10.jpg"
+        "image": "assets/images/camera10.jpg"
     },
     {
         "nom_produit": "Panasonic Lumix GX8",
@@ -129,7 +129,7 @@
             "écran": "3 pouces rotatif"
         },
         "prix": "899.99 €",
-        "image": "images/camera11.jpg"
+        "image": "assets/images/camera11.jpg"
     },
     {
         "nom_produit": "Samsung SmartShot X1",
@@ -141,7 +141,7 @@
             "écran": "3.5 pouces"
         },
         "prix": "749.99 €",
-        "image": "images/camera12.jpg"
+        "image": "assets/images/camera12.jpg"
     },
     {
         "nom_produit": "Ricoh GR II",
@@ -153,7 +153,7 @@
             "écran": "3 pouces"
         },
         "prix": "599.99 €",
-        "image": "images/camera13.jpg"
+        "image": "assets/images/camera13.jpg"
     },
     {
         "nom_produit": "Kodak EasyShare Max",
@@ -165,7 +165,7 @@
             "écran": "2.7 pouces"
         },
         "prix": "149.99 €",
-        "image": "images/camera14.jpg"
+        "image": "assets/images/camera14.jpg"
     },
     {
         "nom_produit": "Lumix Pro DMC-GH5",
@@ -177,7 +177,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "1699.99 €",
-        "image": "images/camera15.jpg"
+        "image": "assets/images/camera15.jpg"
     },
     {
         "nom_produit": "Lumix Pro DMC-GH5",
@@ -189,7 +189,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "1999.99 €",
-        "image": "images/camera16.jpg"
+        "image": "assets/images/camera16.jpg"
     },
     {
         "nom_produit": "Lumix Pro DMC-GH15",
@@ -201,7 +201,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "1399.99 €",
-        "image": "images/camera17.jpg"
+        "image": "assets/images/camera17.jpg"
     },
     {
         "nom_produit": "Lumix Pro DMC-GH5",
@@ -213,7 +213,7 @@
             "écran": "3.2 pouces"
         },
         "prix": "999.99 €",
-        "image": "images/camera18.jpg"
+        "image": "assets/images/camera18.jpg"
     },
     {
         "nom_produit": "Lumix Pro DMC-GH51",
@@ -225,6 +225,6 @@
             "écran": "3.2 pouces"
         },
         "prix": "1699.99 €",
-        "image": "images/camera19.jpg"
+        "image": "assets/images/camera19.jpg"
     }
 ]

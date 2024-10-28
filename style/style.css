@@ -2,20 +2,30 @@
 @import url('reset.css');
 @import url('layout.css');
 @import url('component.css');
-
+body {
+    &:has([selected]) {
+        /* overflow: hidden;
+        height: 100svh; */
+    }
+}
+* {
+    /* background-color: hsl(0 0 0 / 0.3); */
+}
 .products-grid {
     --base-min-col-size: 20ch;
-    &:has([selected])&:not([selected]) {
-        animation: zIndexHack 300ms;
+    gap: 0.3em;
+    &:has([selected]) > :not([selected]) {
+        pointer-events: none;
     }
     & > * {
         display: grid;
-        grid-template-rows: 150px 1fr auto;
+        grid-template-rows: auto 1fr auto;
         grid-template-columns: 1fr 9ch;
         & > img {
             grid-column: span 2;
-            max-height: 100%;
+            /* max-height: 100%; */
             width: 100%;
+            aspect-ratio: 1.5;
             object-fit: cover;
         }
         & > .card-title {
@@ -24,30 +34,87 @@
         & > .card-price {
             grid-column: -2;
         }
-        &:not([selected]) {
-            animation: zIndexHack 300ms;
-        }
         & .details {
-            /* display: none; */
-
-            position: absolute;
-            z-index: -10;
-            top: 50%;
-            left: 50%;
-            translate: -50% -50%;
+            position: fixed;
+            inset: 0;
+            z-index: 10;
             opacity: 0;
-            background-color: white;
-            scale: 0.5;
-            transition: color 300ms ease-in-out, display 300ms ease-in-out, background-color 300ms ease-in-out, scale ease-in-out 300ms,
-                filter ease-in-out 300ms, opacity ease-in-out 300ms;
+            scale: 0;
+            transition: color 300ms ease-in-out, display 300ms ease-in-out, background-color 300ms ease-in-out,
+                scale ease-in-out 300ms, filter ease-in-out 300ms, opacity ease-in-out 300ms;
+            &::before {
+                content: '';
+                background-color: hsl(from var(--primary-color) h s 10 / 0.9);
+                position: absolute;
+                inset: -200vmax;
+            }
+            & > div {
+                position: absolute;
+                top: 50px;
+                left: 50%;
+                translate: -50%;
+                display: grid;
+                grid-template-rows: 150px 1fr auto;
+                --gap: clamp(0.3rem, 2vw, 3rem);
+                --partial-content-part: 5;
+                --partial-margin-part: 1;
+                row-gap: 0.4em;
+                width: min(600px, calc(100% - 1em));
+                margin-inline: auto;
+                padding-bottom: 1em;
+                background-color: hsl(from var(--primary-color) h s 95);
+                & > .detail-title {
+                    display: flex;
+                    justify-content: space-between;
+                    padding-inline: 0.2em;
+                }
+                & > img {
+                    max-height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                }
+                & > .detail-attribut {
+                    row-gap: 0;
+                    & > li {
+                        /* max-width: clamp(240px, 50%, 400px); */
+                        /* margin-inline: auto; */
+                        /* display: flex;
+                        justify-content: space-evenly; */
+                        & > :first-child {
+                            grid-column: content / middle;
+                        }
+                        & > :last-child {
+                            grid-column: middle / content;
+                        }
+                        &:nth-child(odd) {
+                            background-color: hsl(from var(--primary-color) h s 80);
+                        }
+                        &:nth-child(even) {
+                            background-color: hsl(from var(--primary-color) h s 90);
+                        }
+                    }
+                }
+            }
         }
         &[selected] {
             .details {
-                /* display: block; */
-                z-index: 10;
                 opacity: 1;
                 scale: 1;
             }
         }
+    }
+}
+div:has(#search) {
+    position: relative;
+    &::after {
+        content: '';
+        background-image: url('./../assets/svg/search.svg');
+        height: 60%;
+        aspect-ratio: 1;
+        position: absolute;
+        pointer-events: none;
+        z-index: 100;
+        top: 50%;
+        translate: -120% -50%;
     }
 }

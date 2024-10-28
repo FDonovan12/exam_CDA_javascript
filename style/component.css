@@ -8,7 +8,6 @@
     border-radius: var(--_border-radius);
     background-color: var(--_color);
     /* padding: calc(var(--spacer)); */
-    margin: calc(var(--_border-size) / 2);
     /* prettier-ignore */
     transition: 
         color 300ms ease-in-out,
@@ -16,7 +15,7 @@
         scale ease-in-out 300ms,
         filter ease-in-out 300ms,
         opacity ease-in-out 300ms;
-    border: solid 10px red;
+    border: solid 5px;
     outline: none;
     &:focus-visible,
     &:hover {
@@ -29,4 +28,140 @@
         background-color: green;
     }
     border-image: conic-gradient(from var(--_angle), var(--_card_colors)) 1;
+}
+& :where([class*='btn-group'] > *, [class*='btn']:not(*[class*='btn-group'])) {
+    --_border-size: 0.1em;
+    --_border-radius: 0.4em;
+    --_scale-button: 1.1;
+    --_color-box: hsl(from red h s l / 1);
+    --_color-box: var(--_color);
+    --_color-box: hsl(from var(--_color) h s l / 1);
+    /* --_color: red; */
+
+    color: var(--_text);
+    border: none;
+    box-shadow: inset 0 0 0 var(--_border-size) var(--_color-box); /* TODO good thing to replace border ?; */
+    border-radius: var(--_border-radius);
+    background-color: var(--_color);
+    padding: calc(var(--spacer) + var(--_border-size));
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* prettier-ignore */
+    transition: 
+        color 300ms ease-in-out,
+        background-color 300ms ease-in-out,
+        scale ease-in-out 300ms,
+        filter ease-in-out 300ms,
+        opacity ease-in-out 300ms;
+    &:where(.btn-outline, .btn-group-outline > *) {
+        --_color: var(--dark-color);
+        --_text: var(--dark-color-text);
+    }
+    &:where(.btn, .btn-group > *) {
+        --_color: hsl(0 0 0 / 0.6);
+    }
+    &:is([class*='btn-primary']),
+    &:where([class*='btn-primary'], [class*='btn-group-primary'] > *) {
+        --_color: var(--primary-color);
+        --_text: var(--primary-color-text);
+    }
+    &:is([class*='btn-secondary']),
+    &:where([class*='btn-secondary'], [class*='btn-group-secondary'] > *) {
+        --_color: var(--secondary-color);
+        --_text: var(--secondary-color-text);
+    }
+    &:is([class*='btn-warning']),
+    &:where([class*='btn-warning'], [class*='btn-group-warning'] > *) {
+        --_color: var(--warning-color);
+        --_text: var(--warning-color-text);
+    }
+    &:is([class*='btn-success']),
+    &:where([class*='btn-success'], [class*='btn-group-success'] > *) {
+        --_color: var(--success-color);
+        --_text: var(--success-color-text);
+    }
+    &:is([class*='btn-danger']),
+    &:where([class*='btn-danger'], [class*='btn-group-danger'] > *) {
+        --_color: var(--danger-color);
+        --_text: var(--danger-color-text);
+    }
+    &:is([class*='btn-light']),
+    &:where([class*='btn-light'], [class*='btn-group-light'] > *) {
+        --_color: var(--light-color);
+        --_text: var(--light-color-text);
+    }
+    &:is([class*='btn-dark']),
+    &:where([class*='btn-light'], [class*='btn-group-dark'] > *) {
+        --_color: var(--dark-color);
+        --_text: var(--dark-color-text);
+    }
+    &:where([class*='outline'], :where([class*='outline'], [class*='btn-group-outline']) > *) {
+        /* --_color-box: var(--_color); */
+        background-color: transparent;
+        color: var(--_color);
+        &:where(:focus:focus-visible, :hover) {
+            background-color: var(--_color);
+            color: var(--_text);
+        }
+    }
+    /* &:where(.btn, .btn-group > *) {
+        --_color-box: currentColor;
+    } */
+    &:where([class*='btn-group'].scale > *, [class*='btn-group'] > *.scale, [class*='btn']:not(*[class*='btn-group']).scale) {
+        &:where(:not(:hover)) {
+            animation: zIndexHack 100ms;
+        }
+        &:where(:focus:focus-visible, :hover) {
+            scale: var(--_scale-button);
+            z-index: 10;
+        }
+    }
+    &:where([class*='btn-group'].inline > *, [class*='btn-group'] > *.inline, [class*='btn']:not(*[class*='btn-group']).inline) {
+        &::after {
+            content: '';
+            width: calc(100% - 4 * var(--spacer));
+            outline: calc(var(--_border-size) / 2) currentColor solid;
+            position: absolute;
+            bottom: calc(var(--_border-size));
+            scale: 0 1;
+            transition: scale 300ms ease-in-out;
+        }
+        &:where(:focus:focus-visible, :hover) {
+            &::after {
+                scale: 1 1;
+            }
+        }
+    }
+    &:where([class*='neon'], :where([class*='neon'], [class*='btn-group-neon']) > *) {
+        background-color: transparent;
+        color: var(--_color);
+        /* prettier-ignore */
+        box-shadow: 0 0 calc(var(--_border-size) * 4) calc(var(--_border-size)) var(--_color),
+            inset 0 0 calc(var(--_border-size) * 4) var(--_border-size) var(--_color);
+        border-radius: 100vh;
+        isolation: isolate;
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: calc(var(--_border-size));
+            inset: 0;
+            border-radius: 100vh;
+            transition: opacity 300ms ease-in-out;
+            box-shadow: 0 0 calc(var(--_border-size) * 6) calc(var(--_border-size) * 3) var(--_color);
+            background-color: var(--_color);
+            opacity: 0;
+            transition: opacity ease-in-out 300ms;
+            z-index: -1;
+        }
+        &:where(:focus:focus-visible, :hover) {
+            color: var(--_text);
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
 }
