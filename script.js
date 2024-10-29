@@ -2,7 +2,7 @@ fetch('produits.json')
     .then((response) => response.json())
     .then((data) => {
         fullProducts = data;
-        showProducts(data);
+        showProducts(randomItem(6));
     });
 
 let fullProducts = [];
@@ -10,6 +10,8 @@ let productsDiv = [];
 let shoppingCart = getShoppingCartLocal();
 // resetShoppingCart();
 
+const searchForm = document.querySelector('#search-form');
+const shoppingForm = document.querySelector('#shopping-form');
 const searchBar = document.querySelector('#search');
 const priceMin = document.querySelector('#price-min');
 const priceMax = document.querySelector('#price-max');
@@ -17,7 +19,34 @@ const shoppingDiv = document.querySelector('#shopping');
 const shoppingIconDiv = document.querySelector('#shopping-icon');
 const shoppingCartDiv = document.querySelector('#shopping-cart');
 const body = document.querySelector('body');
+const indexLink = document.querySelector('#index');
+const allProductsLink = document.querySelector('#all-products');
 
+shoppingForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const lastName = shoppingForm.querySelector('#last-name').value;
+    const firstName = shoppingForm.querySelector('#first-name').value;
+    const address = shoppingForm.querySelector('#address').value;
+    const bankCard = shoppingForm.querySelector('#bank-card').value;
+    const lastNameIsValid = lastName.length >= 2;
+    const firstNameIsValid = firstName.length >= 2;
+    const addressIsValid = address.length >= 2;
+    const bankCardIsValid = bankCard.length === 16;
+    const formIsValid = lastNameIsValid && firstNameIsValid && addressIsValid && bankCardIsValid;
+    if (formIsValid) {
+        alert('la commande a bien etait validée');
+        closeAll();
+        resetShoppingCart();
+    }
+});
+indexLink.addEventListener('click', () => {
+    searchForm.style.display = 'none';
+    showProducts(randomItem(6));
+});
+allProductsLink.addEventListener('click', () => {
+    searchForm.style.display = 'block';
+    showProducts(filterProducts());
+});
 searchBar.addEventListener('input', () => showProducts(filterProducts()));
 priceMin.addEventListener('input', () => showProducts(filterProducts()));
 priceMax.addEventListener('input', () => showProducts(filterProducts()));
@@ -28,30 +57,33 @@ body.addEventListener('click', (event) => {
     }
 });
 
+function randomItem(number) {
+    let shuffled = fullProducts
+        .map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+    return shuffled.slice(0, number);
+}
 saveShoppingCart();
 
 function filterProducts() {
     return fullProducts
         .map((product) => {
-            return { product: product, substring: numberOfSubstringValid(searchBar.value, product.nom_produit) };
+            return { product: product, nbSubstring: numberOfSubstringValid(searchBar.value, product.nom_produit) };
         })
-        .filter((product) => product.substring > 0)
-        .sort((product1, product2) => product2.substring - product1.substring)
+        .filter((product) => product.nbSubstring > 0)
+        .sort((product1, product2) => product2.nbSubstring - product1.nbSubstring)
         .map((product) => product.product)
-        .filter(
-            (product) =>
-                parseFloat(product.prix) >= parseFloat(priceMin.value) &&
-                parseFloat(product.prix) <= parseFloat(priceMax.value)
-        );
+        .filter((product) => parseFloat(product.prix) <= parseFloat(priceMax.value))
+        .filter((product) => parseFloat(product.prix) >= parseFloat(priceMin.value));
 }
 
 function numberOfSubstringValid(search, name) {
-    const listSearch = slugify(search).split('-');
+    const words = slugify(search).split('-');
     const slugifyName = slugify(name);
-    const numberOfSubstringValid = listSearch
-        .map((sea) => slugifyName.includes(sea))
-        .map((bool) => (bool ? 1 : 0))
-        .reduce((acc, sea) => acc + sea);
+    const numberOfSubstringValid = words
+        .map((word, index) => (slugifyName.includes(word) ? (words.length - index) / words.length + 1 : 0))
+        .reduce((acc, wordInName) => acc + wordInName);
     return numberOfSubstringValid;
 }
 
@@ -143,14 +175,25 @@ function addContentToShoppingCart() {
         shoppingCartDiv.appendChild(div);
     });
     const total = document.createElement('div');
+    total.className = 'total-price';
+    total.innerHTML = `
+        <span>Total : </span><span>${
+            Math.round(
+                shoppingCart
+                    .map((productCart) => parseFloat(productCart.product.prix) * productCart.number)
+                    .reduce((acc, priceProduct) => acc + priceProduct, 0) * 100
+            ) / 100
+        }€</span>    
+    `;
     shoppingCartDiv.appendChild(total);
+    shoppingIconDiv.setAttribute('nb-cart', shoppingCart.length);
 }
 
-function createProductContentToShoppingCart(product) {
-    console.log('createProductContentToShoppingCart');
+function createProductContentToShoppingCart(productCart) {
     const lineProduct = document.createElement('div');
+    lineProduct.className = 'product-cart';
     lineProduct.innerHTML = `
-        <span class="name">${product.product.nom_produit} : </span><span class="number">${product.number}</span>
+        <span class="name">${productCart.product.nom_produit} : </span><span class="number">${productCart.number}</span>
         <button name="plus" class="btn-primary fa-solid fa-plus" tabindex="-1"></button>
         <button name="minus" class="btn-primary fa-solid fa-minus" tabindex="-1"></button>
     `;
@@ -159,21 +202,18 @@ function createProductContentToShoppingCart(product) {
     const minus = lineProduct.querySelector('[name="minus"]');
 
     plus.addEventListener('click', () => {
-        product.number += 1;
+        productCart.number += 1;
         saveShoppingCart();
     });
     minus.addEventListener('click', () => {
-        product.number <= 1 ? removeProductFromShoppingCart(product) : (product.number -= 1);
+        productCart.number <= 1 ? removeProductFromShoppingCart(productCart) : (productCart.number -= 1);
         saveShoppingCart();
     });
     return lineProduct;
 }
 
-function removeProductFromShoppingCart(product) {
-    console.log(product);
-    console.log(shoppingCart[0]);
-    shoppingCart = shoppingCart.filter((productShop) => product.product.id != productShop.product.id);
-    saveShoppingCart();
+function removeProductFromShoppingCart(productCart) {
+    shoppingCart = shoppingCart.filter((productShop) => productCart.product.id != productShop.product.id);
 }
 
 function openShopping(event) {
@@ -185,13 +225,12 @@ function openShopping(event) {
 
 function saveShoppingCart() {
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-    console.log(shoppingCart);
     addContentToShoppingCart();
 }
 
 function resetShoppingCart() {
-    localStorage.setItem('shoppingCart', []);
-    shoppingCart = getShoppingCartLocal();
+    shoppingCart = [];
+    saveShoppingCart();
 }
 
 function getShoppingCartLocal() {
@@ -201,5 +240,5 @@ function getShoppingCartLocal() {
 
 function closeAll() {
     productsDiv.map((productDiv) => cardIsUnselected(body, productDiv));
-    shoppingDiv?.toggleAttribute('opened');
+    shoppingDiv?.removeAttribute('opened');
 }

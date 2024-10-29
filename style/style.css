@@ -2,15 +2,21 @@
 @import url('reset.css');
 @import url('layout.css');
 @import url('component.css');
-
+:root:has(#red:checked) {
+    --primary-color: hsl(0, 84%, 48%);
+}
+:root:has(#blue:checked) {
+    --primary-color: hsl(200, 84%, 48%);
+}
+:root:has(#green:checked) {
+    --primary-color: hsl(120, 84%, 48%);
+}
 body {
+    overflow-x: hidden;
     &::before {
         content: '';
-        /* inset: 0;
-        bottom: 0; */
         height: 100%;
         width: 100%;
-        /* position: absolute; */
         position: fixed;
         background-color: hsl(from var(--primary-color-900) h s l / 0.9);
         opacity: 0;
@@ -36,6 +42,126 @@ main {
 }
 footer {
     background-color: lightgray;
+}
+.d-flex-between {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.2em;
+    flex-wrap: wrap;
+}
+header {
+    position: relative;
+    overflow: hidden;
+    font-size: var(--fs-400);
+    & > .main-navigation {
+        & .d-flex-between {
+            & > * {
+                /* display: block; */
+                width: 15ch;
+            }
+            --base-min-col-size: 20ch;
+        }
+    }
+    &:has([opened]) {
+        overflow: visible;
+    }
+    .shopping {
+        width: 15ch;
+        &[opened] {
+            overflow: visible;
+            z-index: 10;
+            & .shopping-cart {
+                translate: 0;
+            }
+        }
+        & #shopping-icon {
+            width: 100%;
+            align-self: flex-end;
+            &::before {
+                font-size: var(--fs-500);
+            }
+            &::after {
+                font-size: var(--fs-300);
+                color: var(--primary-color-900);
+                background-color: var(--primary-color-200);
+                border-radius: 100vmax;
+                height: 1em;
+                padding: 0.2em;
+                aspect-ratio: 1;
+                content: attr(nb-cart);
+                position: relative;
+                text-align: center;
+                bottom: -0.1em;
+            }
+        }
+        #shopping-cart {
+            width: max-content;
+            display: grid;
+            grid-template-columns: repeat(4, auto);
+            & > div {
+                & > .name {
+                    text-align: end;
+                }
+                &:nth-child(odd) {
+                    background-color: hsl(from var(--primary-color) h s 80);
+                }
+                &:nth-child(even) {
+                    background-color: hsl(from var(--primary-color) h s 90);
+                }
+            }
+        }
+        .shopping-cart {
+            --_timing: 300ms;
+            transition: grid-template-rows var(--_timing) linear, transform var(--_timing) linear,
+                translate var(--_timing) linear;
+            position: absolute;
+            overflow: hidden;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5em;
+            translate: 100%;
+            & :is(.product-cart, .total-price) {
+                grid-column: span 4;
+                display: grid;
+                gap: 0.5em;
+                grid-template-columns: subgrid;
+                place-content: center;
+                padding: 0.1em 0.2em;
+                & > button {
+                    place-content: center;
+                    height: fit-content;
+                    font-size: var(--fs-300);
+                }
+            }
+            & .total-price {
+                grid-column: span 4;
+                text-align: end;
+                & > *:last-child {
+                    grid-column: span 3;
+                }
+            }
+        }
+    }
+    & #shopping-form {
+        padding: 0.2em;
+        display: grid;
+        background-color: hsl(from var(--primary-color) h s 90);
+    }
+    & .color-theme {
+        position: absolute;
+        height: 2em;
+        top: 0;
+        left: 50%;
+        translate: -50% -70%;
+        width: max-content;
+        padding: 0.2em;
+        display: flex;
+        gap: 1em;
+        padding-bottom: 1em;
+        background-color: hsl(from var(--primary-color) h s 90);
+        &:hover {
+        }
+    }
 }
 .products-grid {
     --base-min-col-size: 20ch;
@@ -133,7 +259,6 @@ div:has(> #search) {
     &::after {
         content: '';
         background-color: var(--primary-color-800);
-        /* background-image: url('./../assets/svg/search.svg'); */
         -webkit-mask-image: url('./../assets/svg/search.svg');
         mask-image: url('./../assets/svg/search.svg');
         fill: var(--primary-color);
@@ -150,72 +275,7 @@ div:has(> #search) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .shopping {
-        display: grid;
-        width: 300px;
-        /* grid-template-rows: auto 0fr; */
-        position: relative;
-        overflow: hidden;
-        --_timing: 300ms;
-        /* transition: grid-template-rows 300ms linear, transform 300ms linear, translate 300ms linear; */
-        &[opened] {
-            overflow: visible;
-            z-index: 10;
-            /* grid-template-rows: auto 1fr; */
-            /* &::before {
-                transition: opacity var(--_timing) linear;
-                opacity: 1;
-            } */
-            #shopping-cart {
-                translate: 0;
-            }
-        }
-        /* &::before {
-            content: '';
-            inset: 0;
-            position: absolute;
-            background-color: hsl(from var(--primary-color-900) h s l / 0.9);
-            opacity: 0;
-        } */
-        #shopping-cart {
-            margin-top: 0.5em;
-            top: 100%;
-            right: 0;
-            transition: grid-template-rows var(--_timing) linear, transform var(--_timing) linear,
-                translate var(--_timing) linear;
-            overflow: hidden;
-            position: absolute;
-            translate: 100%;
-            display: grid;
-            grid-template-columns: repeat(4, auto);
-            & > div {
-                display: grid;
-                grid-column: span 4;
-                gap: 0.5em;
-                grid-template-columns: subgrid;
-                place-content: center;
-                & > .name {
-                    text-align: end;
-                }
-                &:nth-child(odd) {
-                    background-color: hsl(from var(--primary-color) h s 80);
-                }
-                &:nth-child(even) {
-                    background-color: hsl(from var(--primary-color) h s 90);
-                }
-                & > button {
-                    place-content: center;
-                    height: fit-content;
-                    font-size: var(--fs-300);
-                }
-            }
-        }
-        & > .btn-primary-outline {
-            height: 100%;
-            font-size: var(--fs-600);
-            * {
-                height: 100%;
-            }
-        }
+    #search-form {
+        display: none;
     }
 }

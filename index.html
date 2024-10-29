@@ -11,6 +11,40 @@
     <body class="grid-container">
         <header>
             <h1>Nos Appareils Photo</h1>
+            <form class="color-theme">
+                <input type="radio" id="blue" name="color-theme" checked />
+                <input type="radio" id="red" name="color-theme" />
+                <input type="radio" id="green" name="color-theme" />
+            </form>
+            <nav class="main-navigation">
+                <ul class="d-flex-between">
+                    <li id="index" class="btn-primary-outline">Accueil</li>
+                    <li id="all-products" class="btn-primary-outline">Tout les produits</li>
+                    <li id="shopping" class="shopping" tabindex="1">
+                        <div id="shopping-icon" nb-cart="0" class="fa-solid fa-cart-shopping btn-primary-outline"></div>
+                        <div class="shopping-cart">
+                            <div id="shopping-cart"></div>
+                            <form id="shopping-form" action="">
+                                <label for="last-name">Nom</label>
+                                <input type="text" name="last-name" id="last-name" minlength="2" required />
+                                <label for="first-name">Prenom</label>
+                                <input type="text" name="first-name" id="first-name" minlength="2" required />
+                                <label for="address">Adress</label>
+                                <input type="text" name="address" id="address" minlength="2" required />
+                                <label for="bank-card">Carte bancaire</label>
+                                <input
+                                    type="text"
+                                    name="bank-card"
+                                    id="bank-card"
+                                    minlength="16"
+                                    maxlength="16"
+                                    required />
+                                <button type="submit" class="btn-primary">Valider la commande</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
         </header>
         <main>
             <div class="header">
@@ -21,10 +55,6 @@
                     <input type="number" id="price-min" min="0" max="2000" value="0" />
                     <input type="number" id="price-max" min="0" max="2000" value="2000" />
                 </form>
-                <div class="shopping" tabindex="1" id="shopping">
-                    <div id="shopping-icon" class="fa-solid fa-cart-shopping btn-primary-outline"></div>
-                    <div id="shopping-cart"></div>
-                </div>
             </div>
             <div class="auto-grid products-grid"></div>
         </main>
