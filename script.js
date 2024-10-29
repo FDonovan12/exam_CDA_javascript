@@ -44,7 +44,7 @@ indexLink.addEventListener('click', () => {
     showProducts(randomItem(6));
 });
 allProductsLink.addEventListener('click', () => {
-    searchForm.style.display = 'block';
+    searchForm.style.display = 'grid';
     showProducts(filterProducts());
 });
 searchBar.addEventListener('input', () => showProducts(filterProducts()));

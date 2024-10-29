@@ -2,14 +2,19 @@
 @import url('reset.css');
 @import url('layout.css');
 @import url('component.css');
+:root {
+    --blue-color: hsl(200, 84%, 48%);
+    --red-color: hsl(0, 84%, 48%);
+    --green-color: hsl(120, 84%, 48%);
+}
 :root:has(#red:checked) {
-    --primary-color: hsl(0, 84%, 48%);
+    --primary-color: var(--red-color);
 }
 :root:has(#blue:checked) {
-    --primary-color: hsl(200, 84%, 48%);
+    --primary-color: var(--blue-color);
 }
 :root:has(#green:checked) {
-    --primary-color: hsl(120, 84%, 48%);
+    --primary-color: var(--green-color);
 }
 body {
     overflow-x: hidden;
@@ -149,20 +154,48 @@ header {
     }
     & .color-theme {
         position: absolute;
-        height: 2em;
+        /* height: 4em; */
         top: 0;
         left: 50%;
         translate: -50% -70%;
         width: max-content;
-        padding: 0.2em;
+        padding: 1em;
         display: flex;
         gap: 1em;
-        padding-bottom: 1em;
+        transition: translate 300ms linear;
         background-color: hsl(from var(--primary-color) h s 90);
+        border-radius: 0 0 1em 1em;
         &:hover {
+            translate: -50% 0;
+        }
+        & * {
+            height: fit-content;
+            accent-color: pink;
+            box-shadow: none;
+            cursor: pointer;
+            appearance: none;
+            height: 0.5em;
+            border-radius: 100%;
+            border: none;
+            outline: solid currentColor 3px;
+            outline-offset: 2px;
+            aspect-ratio: 1;
+            &:checked {
+                background-color: currentColor;
+            }
+        }
+        & #blue {
+            color: var(--blue-color);
+        }
+        & #red {
+            color: var(--red-color);
+        }
+        & #green {
+            color: var(--green-color);
         }
     }
 }
+
 .products-grid {
     --base-min-col-size: 20ch;
     gap: 0.3em;
@@ -277,5 +310,10 @@ div:has(> #search) {
     align-items: center;
     #search-form {
         display: none;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.2em;
+        & > .search {
+            grid-column: span 2;
+        }
     }
 }
