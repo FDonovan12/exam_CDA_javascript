@@ -44,13 +44,10 @@ function addContentToShoppingCart() {
     const total = document.createElement('div');
     total.className = 'total-price';
     total.innerHTML = `
-        <span>Total : </span><span>${
-            Math.round(
-                shoppingCart
-                    .map((productCart) => parseFloat(productCart.product.prix) * productCart.number)
-                    .reduce((acc, priceProduct) => acc + priceProduct, 0) * 100
-            ) / 100
-        }€</span>    
+        <span>Total : </span><span>${shoppingCart
+            .map((productCart) => parseFloat(productCart.product.prix) * productCart.number)
+            .reduce((acc, priceProduct) => acc + priceProduct, 0)
+            .toFixed(2)}€</span>    
     `;
     shoppingCartDiv.appendChild(total);
     shoppingIconDiv.setAttribute('nb-cart', shoppingCart.length);
