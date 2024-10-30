@@ -7,38 +7,22 @@ fetch('produits.json')
 
 let fullProducts = [];
 let productsDiv = [];
-let shoppingCart = getShoppingCartLocal();
-// resetShoppingCart();
 
 const searchForm = document.querySelector('#search-form');
-const shoppingForm = document.querySelector('#shopping-form');
 const searchBar = document.querySelector('#search');
 const priceMin = document.querySelector('#price-min');
 const priceMax = document.querySelector('#price-max');
-const shoppingDiv = document.querySelector('#shopping');
-const shoppingIconDiv = document.querySelector('#shopping-icon');
-const shoppingCartDiv = document.querySelector('#shopping-cart');
 const body = document.querySelector('body');
 const indexLink = document.querySelector('#index');
 const allProductsLink = document.querySelector('#all-products');
+const blueTheme = document.querySelector('#blue');
+const redTheme = document.querySelector('#red');
+const greenTheme = document.querySelector('#green');
+saveShoppingCart();
+console.log('test');
+saveThemeUser([blueTheme, redTheme, greenTheme]);
+getThemeUser();
 
-shoppingForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const lastName = shoppingForm.querySelector('#last-name').value;
-    const firstName = shoppingForm.querySelector('#first-name').value;
-    const address = shoppingForm.querySelector('#address').value;
-    const bankCard = shoppingForm.querySelector('#bank-card').value;
-    const lastNameIsValid = lastName.length >= 2;
-    const firstNameIsValid = firstName.length >= 2;
-    const addressIsValid = address.length >= 2;
-    const bankCardIsValid = bankCard.length === 16;
-    const formIsValid = lastNameIsValid && firstNameIsValid && addressIsValid && bankCardIsValid;
-    if (formIsValid) {
-        alert('la commande a bien etait validée');
-        closeAll();
-        resetShoppingCart();
-    }
-});
 indexLink.addEventListener('click', () => {
     searchForm.style.display = 'none';
     showProducts(randomItem(6));
@@ -50,7 +34,6 @@ allProductsLink.addEventListener('click', () => {
 searchBar.addEventListener('input', () => showProducts(filterProducts()));
 priceMin.addEventListener('input', () => showProducts(filterProducts()));
 priceMax.addEventListener('input', () => showProducts(filterProducts()));
-shoppingIconDiv.addEventListener('click', (event) => openShopping(event));
 body.addEventListener('click', (event) => {
     if (event.target.matches('body')) {
         closeAll();
@@ -64,7 +47,6 @@ function randomItem(number) {
         .map(({ value }) => value);
     return shuffled.slice(0, number);
 }
-saveShoppingCart();
 
 function filterProducts() {
     return fullProducts
@@ -158,87 +140,60 @@ function cardIsUnselected(parentDiv, card) {
     parentDiv.querySelectorAll('.card').forEach((card) => card.setAttribute('tabindex', 1));
 }
 
-function addToShoppingCart(product) {
-    const filterShop = shoppingCart.filter((shopProduct) => shopProduct.product.id === product.id);
-    if (filterShop.length === 0) {
-        shoppingCart.push({ product: product, number: 1 });
-    } else {
-        filterShop[0].number += 1;
-    }
-    saveShoppingCart();
-}
-
-function addContentToShoppingCart() {
-    shoppingCartDiv.innerHTML = '';
-    shoppingCart.forEach((product) => {
-        div = createProductContentToShoppingCart(product);
-        shoppingCartDiv.appendChild(div);
-    });
-    const total = document.createElement('div');
-    total.className = 'total-price';
-    total.innerHTML = `
-        <span>Total : </span><span>${
-            Math.round(
-                shoppingCart
-                    .map((productCart) => parseFloat(productCart.product.prix) * productCart.number)
-                    .reduce((acc, priceProduct) => acc + priceProduct, 0) * 100
-            ) / 100
-        }€</span>    
-    `;
-    shoppingCartDiv.appendChild(total);
-    shoppingIconDiv.setAttribute('nb-cart', shoppingCart.length);
-}
-
-function createProductContentToShoppingCart(productCart) {
-    const lineProduct = document.createElement('div');
-    lineProduct.className = 'product-cart';
-    lineProduct.innerHTML = `
-        <span class="name">${productCart.product.nom_produit} : </span><span class="number">${productCart.number}</span>
-        <button name="plus" class="btn-primary fa-solid fa-plus" tabindex="-1"></button>
-        <button name="minus" class="btn-primary fa-solid fa-minus" tabindex="-1"></button>
-    `;
-
-    const plus = lineProduct.querySelector('[name="plus"]');
-    const minus = lineProduct.querySelector('[name="minus"]');
-
-    plus.addEventListener('click', () => {
-        productCart.number += 1;
-        saveShoppingCart();
-    });
-    minus.addEventListener('click', () => {
-        productCart.number <= 1 ? removeProductFromShoppingCart(productCart) : (productCart.number -= 1);
-        saveShoppingCart();
-    });
-    return lineProduct;
-}
-
-function removeProductFromShoppingCart(productCart) {
-    shoppingCart = shoppingCart.filter((productShop) => productCart.product.id != productShop.product.id);
-}
-
-function openShopping(event) {
-    if (event.target.matches('button')) {
-        return;
-    }
-    shoppingDiv?.toggleAttribute('opened');
-}
-
-function saveShoppingCart() {
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-    addContentToShoppingCart();
-}
-
-function resetShoppingCart() {
-    shoppingCart = [];
-    saveShoppingCart();
-}
-
-function getShoppingCartLocal() {
-    const local = localStorage.getItem('shoppingCart');
-    return local ? JSON.parse(local) : [];
-}
-
 function closeAll() {
     productsDiv.map((productDiv) => cardIsUnselected(body, productDiv));
     shoppingDiv?.removeAttribute('opened');
 }
+
+function saveThemeUser(allThemesRadio) {
+    console.log(allThemesRadio);
+    allThemesRadio.forEach((theme) => {
+        theme.addEventListener('input', () => {
+            localStorage.setItem('themeUser', theme.id);
+        });
+    });
+}
+
+function getThemeUser() {
+    const theme = localStorage.getItem('themeUser');
+    if (theme) {
+        document.getElementById(theme).click();
+    }
+}
+
+const users = [
+    { name: 'Alice', role: 'editor' },
+    { name: 'Bob', role: 'viewer' },
+    { name: 'Chloe', role: 'admin' },
+];
+const rolePermissions = {
+    admin: ['create', 'read', 'update', 'delete'],
+    editor: ['read', 'update'],
+    viewer: ['read'],
+};
+
+console.log(
+    users.map((user) => {
+        user.permission = rolePermissions[user.role];
+        return user;
+    })
+);
+const cart = [
+    { name: 'Laptop', price: 1000, quantity: 1, onSale: true },
+    { name: 'Headphones', price: 200, quantity: 2, onSale: false },
+    { name: 'Monitor', price: 300, quantity: 1, onSale: true },
+    { name: 'Mouse', price: 50, quantity: 3, onSale: false },
+    { name: 'Keyboard', price: 100, quantity: 1, onSale: true },
+];
+
+console.log(cart);
+console.log(
+    cart
+        .filter((product) => product.onSale)
+        .map((product) => {
+            product.price *= 0.8;
+            return product;
+        })
+        .reduce((sum, product) => sum + product.price * product.quantity, 0)
+);
+console.log(cart);
